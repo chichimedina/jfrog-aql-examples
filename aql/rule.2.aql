@@ -1,0 +1,26 @@
+items.find
+(
+  {
+    "repo": "local-test-repo-2",
+    "updated":
+    {
+      "$before": "9mo"
+    },
+    "$msp": [
+      { "path": { "$match":  "app/*" } },
+      { "name": { "$nmatch": "*develop*" } },
+      { "name": { "$nmatch": "*master*" } },
+      { "name": { "$nmatch": "*main*" } }
+    ],
+    "$or": [
+      { "stat.downloaded": { "$before": "9mo" } },
+      { "stat.downloads":  { "$eq":     null } }
+    ]
+  }
+).sort
+(
+  {
+    "$asc":
+      ["updated"]
+  }
+)
